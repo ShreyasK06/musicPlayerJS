@@ -42,15 +42,15 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
 
 const TopPlay = () => {
   const dispatch = useDispatch();
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data } = useGetTopPlaysQuery();
+  const { activeSong, isPlaying, genreListId } = useSelector((state) => state.player);
+  const { data } = useGetTopPlaysQuery(genreListId || "POP");
   const divRef = useRef(null);
 
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   });
 
-  const topPlays = data?.tracks.slice(0, 5);
+  const topPlays = data?.tracks.slice(0, 4);
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -66,9 +66,6 @@ const TopPlay = () => {
       <div className="w-full flex flex-col">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-white font-bold text-2xl">Top Charts</h2>
-          <Link to="/top-charts">
-            <p className="text-gray-300 text-base cursor-pointer">See more</p>
-          </Link>
         </div>
 
         <div className="mt-4 flex flex-col gap-1">

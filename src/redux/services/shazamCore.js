@@ -12,9 +12,13 @@ export const shazamCoreApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        getTopCharts: builder.query({ query: () => '/charts/get-top-songs-in_country_by_genre?genre=POP&country_code=US' }),
-        getTopPlays: builder.query({query: () =>'/charts/get-top-songs-in_world_by_genre?genre=POP' }),
-        getSongDetails: builder.query({query: ({songid}) => `/tracks/details?track_id=${songid}`}),
+        getTopCharts: builder.query({ query: (genre) => `/charts/get-top-songs-in_country_by_genre?genre=${genre}&country_code=US&limit=50` }),
+        getTopPlays: builder.query({ query: (genre) => `/charts/get-top-songs-in_world_by_genre?genre=${genre}&limit=50` }),
+        getSongDetails: builder.query({ query: ({ songid }) => `/songs/get_details?id=${songid}` }),
+        getSongRelated: builder.query({ query: ({ songid }) => `/songs/list-recommendations?id=${songid}` }),
+        getArtistDetails: builder.query({ query: (artistId) => `/artist/get-details?id=${artistId}` }),
+        getArtistTopSongs: builder.query({ query: (artistId) => `/artist/get-top-songs?id=${artistId}` }),
+        getSongsBySearch: builder.query({query:(searchTerm) => `/search?term=${searchTerm}`})
     }),
 });
 
@@ -22,4 +26,8 @@ export const {
     useGetTopChartsQuery,
     useGetTopPlaysQuery,
     useGetSongDetailsQuery,
+    useGetSongRelatedQuery,
+    useGetArtistDetailsQuery,
+    useGetArtistTopSongsQuery,
+    useGetSongsBySearchQuery,
 } = shazamCoreApi;
